@@ -12317,7 +12317,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="R10" library="rcl" deviceset="R-EU_" device="R1206" value="10k"/>
 <part name="R11" library="rcl" deviceset="R-EU_" device="R1206" value="10k"/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="R1206" value="10k"/>
-<part name="Q2" library="crystal" deviceset="CRYSTAL" device="TC26H"/>
+<part name="Q2" library="crystal" deviceset="CRYSTAL" device="TC26H" value="32768k"/>
 <part name="C8" library="rcl" deviceset="C-EU" device="C1206" value="12p"/>
 <part name="C9" library="rcl" deviceset="C-EU" device="C1206" value="12p"/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
@@ -12431,6 +12431,10 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <pinref part="C5" gate="G$1" pin="2"/>
 <wire x1="134.62" y1="111.76" x2="134.62" y2="109.22" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="109.22" x2="144.78" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="G$1" pin="GND@1"/>
+<wire x1="152.4" y1="129.54" x2="144.78" y2="129.54" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="129.54" x2="144.78" y2="114.3" width="0.1524" layer="91"/>
+<junction x="144.78" y="114.3"/>
 </segment>
 <segment>
 <wire x1="20.32" y1="177.8" x2="27.94" y2="177.8" width="0.1524" layer="91"/>
@@ -12574,28 +12578,23 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <junction x="149.86" y="121.92"/>
 <pinref part="P+6" gate="1" pin="+5V"/>
 <wire x1="149.86" y1="124.46" x2="134.62" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="134.62" y1="124.46" x2="134.62" y2="129.54" width="0.1524" layer="91"/>
 <junction x="149.86" y="124.46"/>
 <pinref part="C5" gate="G$1" pin="1"/>
-<wire x1="134.62" y1="129.54" x2="134.62" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="134.62" y1="124.46" x2="134.62" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="134.62" y1="132.08" x2="134.62" y2="134.62" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="134.62" x2="134.62" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="152.4" x2="134.62" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="124.46" x2="134.62" y2="119.38" width="0.1524" layer="91"/>
 <junction x="134.62" y="124.46"/>
-<pinref part="IC1" gate="G$1" pin="GND@1"/>
-<wire x1="152.4" y1="129.54" x2="149.86" y2="129.54" width="0.1524" layer="91"/>
-<junction x="134.62" y="129.54"/>
-<pinref part="IC1" gate="G$1" pin="AVCC"/>
-<wire x1="149.86" y1="129.54" x2="134.62" y2="129.54" width="0.1524" layer="91"/>
-<wire x1="152.4" y1="132.08" x2="149.86" y2="132.08" width="0.1524" layer="91"/>
-<wire x1="149.86" y1="132.08" x2="149.86" y2="129.54" width="0.1524" layer="91"/>
-<junction x="149.86" y="129.54"/>
 <pinref part="IC1" gate="G$1" pin="RESET"/>
 <wire x1="152.4" y1="152.4" x2="134.62" y2="152.4" width="0.1524" layer="91"/>
 <junction x="134.62" y="152.4"/>
 <pinref part="IC1" gate="G$1" pin="AREF"/>
 <wire x1="152.4" y1="134.62" x2="134.62" y2="134.62" width="0.1524" layer="91"/>
 <junction x="134.62" y="134.62"/>
+<pinref part="IC1" gate="G$1" pin="AVCC"/>
+<wire x1="152.4" y1="132.08" x2="134.62" y2="132.08" width="0.1524" layer="91"/>
+<junction x="134.62" y="132.08"/>
 </segment>
 </net>
 <net name="N$8" class="0">
@@ -13079,6 +13078,9 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="104,1,152.4,132.08,IC1,AVCC,+5V,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>
