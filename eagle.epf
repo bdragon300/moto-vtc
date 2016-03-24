@@ -44,6 +44,7 @@ UsedLibrary="/home/gosha/.eagle/lbr/smd-ipc.lbr"
 UsedLibrary="/home/gosha/.eagle/lbr/smd-special.lbr"
 UsedLibrary="/home/gosha/.eagle/lbr/supply1.lbr"
 UsedLibrary="/home/gosha/.eagle/lbr/supply2.lbr"
+UsedLibrary="/home/gosha/.eagle/lbr/switch-omron.lbr"
 UsedLibrary="/home/gosha/.eagle/lbr/texas.lbr"
 UsedLibrary="/home/gosha/.eagle/lbr/transistor-npn.lbr"
 UsedLibrary="/home/gosha/.eagle/lbr/transistor-pnp.lbr"
@@ -53,7 +54,7 @@ UsedLibrary="/home/gosha/.eagle/lbr/transistor.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="31 0 630 399"
+Loc="31 0 1279 773"
 State=1
 Number=0
 
