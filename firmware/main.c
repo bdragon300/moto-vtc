@@ -1,8 +1,10 @@
+#include "config_application.h"
 #include "femtoos_code.h"
 
-int main()
-{
 
+void appBoot(void)
+{
+	
 }
 
 #if (preTaskDefined(Display))
