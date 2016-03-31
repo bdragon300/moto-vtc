@@ -13109,15 +13109,15 @@ Source: avr.lbr</description>
 </net>
 <net name="N$38" class="0">
 <segment>
-<pinref part="IC1" gate="G$1" pin="PB0(ICP)"/>
-<wire x1="223.52" y1="152.4" x2="223.52" y2="106.68" width="0.1524" layer="91"/>
-<wire x1="223.52" y1="106.68" x2="193.04" y2="106.68" width="0.1524" layer="91"/>
 <pinref part="S1" gate="1" pin="S"/>
 <pinref part="R22" gate="G$1" pin="1"/>
 <wire x1="236.22" y1="154.94" x2="236.22" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="236.22" y1="152.4" x2="236.22" y2="149.86" width="0.1524" layer="91"/>
 <wire x1="223.52" y1="152.4" x2="236.22" y2="152.4" width="0.1524" layer="91"/>
 <junction x="236.22" y="152.4"/>
+<pinref part="IC1" gate="G$1" pin="ADC6"/>
+<wire x1="223.52" y1="152.4" x2="223.52" y2="137.16" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="137.16" x2="193.04" y2="137.16" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$5" class="0">
