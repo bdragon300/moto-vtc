@@ -66,8 +66,18 @@
 #define	includeTaskDelayFromNow		cfgTrue
 #define	includeTaskDelayFromWake	cfgFalse
 #define	includeGenSuspend			cfgFalse
+#define	includeTaskDelayFromNow		cfgTrue
 
 /*----------------
 - external calls -
 ------------------*/
 #define	callAppBoot					cfgTrue
+
+/*----------------
+------ Stack -----
+------------------*/
+#define StackSafety					4
+#define StackSizeOS					24
+#define StackSizeISR				0
+#define StackSizeShared				0
+#define StackSizeOverride			46

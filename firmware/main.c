@@ -1,5 +1,6 @@
 #include "config_application.h"
 #include "femtoos_code.h"
+#include "types.h"
 #include <avr/io.h>
 
 
@@ -18,11 +19,20 @@ void appBoot(void)
 	INPUT_DDR &= ~(_BV(CHARGE_PIN) | _BV(BUTTON_PIN));
 }
 
+/*-------------
+--- Globals ---
+---------------*/
+
+int8_t temperature = 0;
+Human_timedate_t timedate = {0};
+Display_mode_t display_mode = INIT;
+
+
 #if (preTaskDefined(Display))
 
 void appLoop_Display(void)
 {
-	const char dig_pattern = {DIG_PATTERN_0, DIG_PATTERN_1, DIG_PATTERN_2, DIG_PATTERN_3, DIG_PATTERN_4,
+	const uint8_t dig_pattern = {DIG_PATTERN_0, DIG_PATTERN_1, DIG_PATTERN_2, DIG_PATTERN_3, DIG_PATTERN_4,
 		DIG_PATTERN_5, DIG_PATTERN_6, DIG_PATTERN_7, DIG_PATTERN_8, DIG_PATTERN_9};
 	while(true) {
 		
