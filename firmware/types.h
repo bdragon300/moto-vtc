@@ -1,5 +1,5 @@
-#ifndef DISPLAY_H
-#define DISPLAY_H
+#ifndef TYPES_H
+#define TYPES_H
 
 /* Raw types to store data directly from data sources */
 typedef struct
