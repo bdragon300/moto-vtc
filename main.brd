@@ -1890,6 +1890,7 @@ design rules under a new name.</description>
 <attribute name="OC_FARNELL" value="9171371" x="19.685" y="-24.13" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="D4" library="diode" package="D-7.5" value="" x="31.75" y="6.35" rot="R270"/>
+<element name="C1" library="rcl" package="C1206" value="100n" x="-57.15" y="-5.08"/>
 </elements>
 <signals>
 <signal name="GND">
@@ -1912,24 +1913,26 @@ design rules under a new name.</description>
 <contactref element="R21" pad="1"/>
 <contactref element="D2" pad="A"/>
 <contactref element="S1" pad="3"/>
-<wire x1="35.56" y1="2.54" x2="3.0988" y2="6.6294" width="0" layer="19" extent="1-1"/>
-<wire x1="-45.72" y1="27.94" x2="35.56" y2="2.54" width="0" layer="19" extent="1-1"/>
+<contactref element="C1" pad="2"/>
+<wire x1="-45.72" y1="27.94" x2="-55.75" y2="-5.08" width="0" layer="19" extent="1-1"/>
 <wire x1="-38.1" y1="26.64" x2="-45.72" y2="27.94" width="0" layer="19" extent="1-1"/>
-<wire x1="14.605" y1="10.6934" x2="-38.1" y2="26.64" width="0" layer="19" extent="1-1"/>
-<wire x1="-54.48" y1="38.1" x2="35.56" y2="2.54" width="0" layer="19" extent="1-1"/>
-<wire x1="-48.13" y1="38.1" x2="-54.48" y2="38.1" width="0" layer="19" extent="1-1"/>
-<wire x1="34.795" y1="8.255" x2="-48.13" y2="38.1" width="0" layer="19" extent="1-1"/>
-<wire x1="0.27" y1="24.4" x2="34.795" y2="8.255" width="0" layer="19" extent="1-1"/>
-<wire x1="-43.332" y1="45.72" x2="34.795" y2="8.255" width="0" layer="19" extent="1-1"/>
-<wire x1="-30.35" y1="45.72" x2="0.27" y2="24.4" width="0" layer="19" extent="1-1"/>
+<wire x1="-48.13" y1="38.1" x2="-45.72" y2="27.94" width="0" layer="19" extent="1-1"/>
+<wire x1="-54.48" y1="38.1" x2="-48.13" y2="38.1" width="0" layer="19" extent="1-1"/>
+<wire x1="-43.332" y1="45.72" x2="-48.13" y2="38.1" width="0" layer="19" extent="1-1"/>
+<wire x1="-30.35" y1="45.72" x2="-43.332" y2="45.72" width="0" layer="19" extent="1-1"/>
 <wire x1="-25.27" y1="45.72" x2="-30.35" y2="45.72" width="0" layer="19" extent="1-1"/>
 <wire x1="-20.19" y1="45.72" x2="-25.27" y2="45.72" width="0" layer="19" extent="1-1"/>
-<wire x1="39.64" y1="7.255" x2="-25.27" y2="45.72" width="0" layer="19" extent="1-1"/>
 <wire x1="-36.982" y1="58.42" x2="-43.332" y2="45.72" width="0" layer="19" extent="1-1"/>
-<wire x1="20.36" y1="3.81" x2="14.605" y2="10.6934" width="0" layer="19" extent="1-1"/>
-<wire x1="25.165" y1="2.0574" x2="20.36" y2="3.81" width="0" layer="19" extent="1-1"/>
-<wire x1="24.365" y1="10.6426" x2="25.165" y2="2.0574" width="0" layer="19" extent="1-1"/>
+<wire x1="0.27" y1="24.4" x2="-20.19" y2="45.72" width="0" layer="19" extent="1-1"/>
+<wire x1="3.0988" y1="6.6294" x2="0.27" y2="24.4" width="0" layer="19" extent="1-1"/>
+<wire x1="14.605" y1="10.6934" x2="3.0988" y2="6.6294" width="0" layer="19" extent="1-1"/>
+<wire x1="20.36" y1="3.81" x2="14.605" y2="10.6934" width="0" layer="19" extent="1-16"/>
+<wire x1="25.165" y1="2.0574" x2="20.36" y2="3.81" width="0" layer="19" extent="1-16"/>
+<wire x1="24.365" y1="10.6426" x2="20.36" y2="3.81" width="0" layer="19" extent="1-16"/>
 <wire x1="25.965" y1="10.6426" x2="24.365" y2="10.6426" width="0" layer="19" extent="1-1"/>
+<wire x1="34.795" y1="8.255" x2="25.965" y2="10.6426" width="0" layer="19" extent="1-1"/>
+<wire x1="39.64" y1="7.255" x2="34.795" y2="8.255" width="0" layer="19" extent="1-1"/>
+<wire x1="35.56" y1="2.54" x2="34.795" y2="8.255" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="IC3" pad="2"/>
@@ -2233,7 +2236,9 @@ design rules under a new name.</description>
 <contactref element="R22" pad="1"/>
 <contactref element="S1" pad="1"/>
 <contactref element="IC1" pad="19"/>
-<wire x1="3.0988" y1="11.1506" x2="23.565" y2="2.0574" width="0" layer="19" extent="1-1"/>
+<contactref element="C1" pad="1"/>
+<wire x1="3.0988" y1="11.1506" x2="-58.55" y2="-5.08" width="0" layer="19" extent="1-1"/>
+<wire x1="23.565" y1="2.0574" x2="3.0988" y2="11.1506" width="0" layer="19" extent="1-1"/>
 <wire x1="-42.062" y1="58.42" x2="3.0988" y2="11.1506" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$5">
