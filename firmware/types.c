@@ -19,6 +19,5 @@ raw2temp(Raw_temp_t* raw)
 uint8_t 
 raw2volt(Raw_volt_t* raw)
 {
-	//TODO:
-	return 12;
+	return uint16_t(raw * 7) / 10 + 1; //180*res/255
 }

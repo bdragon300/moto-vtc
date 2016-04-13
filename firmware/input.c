@@ -1,7 +1,4 @@
 #include "input.h"
-#include "config_application.h"
-#include <avr/io.h>
-#include <avr/stdint.h>
 
 uint8_t ticks_counter = 0;
 Input_mode_t input_mode = IDLE;
@@ -41,17 +38,17 @@ get_button_state(void)
 	return (INPUT_PIN & _BV(BUTTON_PIN)) != 0;
 }
 
-inline uint8_t
+inline Raw_volt_t
 get_volts(void)
 {
 	ADCSRA |= _BV(ADSC); //Start the conversion
 	while (ADCSRA & _BV(ADIF)); //Wait until it complete
 
-	uint8_t res = ADCL;
+	Raw_volt_t res = ADCL;
 	res = ADCH;
 	ADCSRA |= _BV(ADIF); //Clear ADIF bit by write one to it
 
-	return uint16_t(res * 7) / 10 + 1; //180*res/255
+	return res;
 }
 
 inline uint8_t

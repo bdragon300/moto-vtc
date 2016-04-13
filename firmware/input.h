@@ -1,6 +1,11 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+#include "config_application.h"
+#include "types.h"
+#include <avr/io.h>
+#include <avr/stdint.h>
+
 /*
 Minimal count of task ticks for LONG_PRESS button mode switch on
 */
@@ -29,7 +34,7 @@ get_button_state(void);
 
 //Starts ADC convert and waits until it will finished
 //Returns actual voltage * 10 with accuracy 0.1, i.e. 134 means 13.4 volts
-inline uint8_t
+inline Raw_volt_t
 get_volts(void);
 
 // Returns whether the battery is charging now
