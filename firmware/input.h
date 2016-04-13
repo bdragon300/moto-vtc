@@ -32,4 +32,9 @@ get_button_state(void);
 inline uint8_t
 get_volts(void);
 
+// Returns whether the battery is charging now
+// Returns 0|1
+inline uint8_t
+get_charge(void);
+
 #endif

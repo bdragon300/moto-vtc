@@ -53,3 +53,9 @@ get_volts(void)
 
 	return uint16_t(res * 7) / 10 + 1; //180*res/255
 }
+
+inline uint8_t
+get_charge(void)
+{
+	return (INPUT_PIN & _BV(CHARGE_PIN)) != 0;
+}
