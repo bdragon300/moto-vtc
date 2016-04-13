@@ -27,4 +27,9 @@ get_input_mode();
 inline uint8_t
 get_button_state(void);
 
+//Starts ADC convert and waits until it will finished
+//Returns actual voltage * 10 with accuracy 0.1, i.e. 134 means 13.4 volts
+inline uint8_t
+get_volts(void);
+
 #endif
