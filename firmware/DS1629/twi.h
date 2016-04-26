@@ -8,17 +8,20 @@
 #ifndef DS1629_TWI_H_
 #define DS1629_TWI_H_
 
-/* Set START condition on bus */
-void
-twi_start(void);
+inline void
+twi_init(void);
 
-/* Set STOP condition on bus */
-void
-twi_stop(void);
+inline uint8_t
+twi_start(void); //0 - success
+inline void
+twi_stop(void); //0 - success
 
-uint8_t twi_write_byte(uint8_t data); //Returns ACK
-uint8_t twi_read_byte(void);
-uint8_t twi_write_2byte(uint16_t data); //Returns ACK
-uint16_t twi_read_byte(void);
+uint8_t
+twi_send_byte(uint8_t data); //Returns ACK
+uint8_t
+twi_recv_byte(uint8_t ack); //Slave receives ACK/NAK depending on ack
+
+static inline void
+_twi_send_byte(uint8_t);
 
 #endif /* DS1629_TWI_H_ */

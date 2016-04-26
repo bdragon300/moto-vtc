@@ -4,12 +4,12 @@
 /* Raw types to store data directly from data sources */
 typedef struct
 {
-	uint8_t	seconds;
-	uint8_t minutes;
-	uint8_t hours; //24-hour format
-	uint8_t day;
-	uint8_t month;
-	uint8_t year;
+    uint8_t seconds;
+    uint8_t minutes;
+    uint8_t hours; //24-hour format
+    uint8_t day;
+    uint8_t month;
+    uint8_t year;
 } Raw_time_t; // Data received directly from DS1629
 typedef uint16_t Raw_temp_t; // Data received directly from DS1629
 typedef uint8_t Raw_volt_t; // Data received directly from ADC
@@ -17,8 +17,8 @@ typedef uint8_t Raw_volt_t; // Data received directly from ADC
 /* Data types */
 typedef struct 
 {
-	uint8_t hours;
-	uint8_t minutes;
+    uint8_t hours;
+    uint8_t minutes;
 } Time_t;
 
 /* Functions */

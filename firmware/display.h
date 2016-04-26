@@ -7,8 +7,8 @@
 enum {TIME, VOLT, TEMP, INIT} Display_mode_t;
 typedef struct 
 {
-	uint8_t digits[4];
-	uint8_t aux; //Auxiliary segments like dots, colons
+    uint8_t digits[4];
+    uint8_t aux; //Auxiliary segments like dots, colons
 } Display_data_t;
 
 // Show information on display and set display mode

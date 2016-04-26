@@ -15,9 +15,9 @@ Minimal count of task ticks for LONG_PRESS button mode switch on
 Button input mode.
 */
 enum {
-	IDLE,		//Button released
-	CLICK,		//User clicked the button (pressed and released)
-	LONG_PRESS	//User is pressing button longer then press timeout
+    IDLE,       //Button released
+    CLICK,      //User clicked the button (pressed and released)
+    LONG_PRESS  //User is pressing button longer then press timeout
 } Input_mode_t;
 
 // Calls on every timer tick from task
