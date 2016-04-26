@@ -30,11 +30,21 @@ twi_stop(void)
     TWCR = _BV(TWINT) | _BV(TWSTO) | _BV(TWEN);
 }
 
+
+
 uint8_t
 twi_send_byte(uint8_t data)
 {
     _twi_send_byte(data);
     return (TWSR & 0x08);
+}
+
+uint8_t
+twi_send_array(uint8_t* buffer, size_t size)
+{
+	for (size_t i = 0; i < size; ++i) {
+		twi_send_byte(data[i]);
+	}
 }
 
 uint8_t
@@ -44,6 +54,18 @@ twi_recv_byte(uint8_t ack)
 	while ( ! (TWCR & _BV(TWINT)) );
 	return TWDR;
 }
+size_t
+twi_recv_array(uint8_t* buffer, size_t size)
+{
+	size_t i = 0;
+	while ( ! (TWSR & 0x58) ) {
+		//On last iteration we send NAK
+		buffer[i] = twi_recv_byte(i+1 == size);
+		i++;
+	}
+	return i;
+}
+
 
 static inline void
 _twi_send_byte(uint8_t)
