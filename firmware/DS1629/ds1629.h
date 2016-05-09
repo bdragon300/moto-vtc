@@ -79,10 +79,10 @@ typedef int16_t ds1629_Temp_t;
 void
 ds1629_init(uint8_t ctl);
 
+
 /*
  * Temperature
  */
-
 // Reads temperature register with 0.5 C resolution
 // Returns actual temperature * 10, i.e. -12.5 will be -125
 ds1629_Temp_t
@@ -92,12 +92,20 @@ ds1629_start_convert_temp(uint8_t ctl);
 uint8_t
 ds1629_stop_convert_temp(uint8_t ctl);
 
+
 /*
  * Time/Date
  */
 ds1629_Time_t
 ds1629_read_clock(uint8_t ctl);
 
+uint8_t
+ds1629_write_clock(uint8_t ctl, ds1629_Time_t* data);
+
+
+/*
+ * Low-level functions
+ */
 uint8_t
 ds1629_op(
 	uint8_t ctl,
@@ -108,16 +116,21 @@ ds1629_op(
 	uint8_t* rdata,
 	size_t rdatac
 );
+
 #define ds1629_op_noarg(ctl, opcode) \
-	ds1629_op(ctl, opcode, 0, 0, DSADDR_IGNORE, 0, 0)
+	ds1629_op(ctl, opcode, DSADDR_IGNORE, 0, 0, 0, 0)
+
 #define ds1629_op_w(ctl, opcode, data, datac) \
-	ds1629_op(ctl, opcode, data, DSADDR_IGNORE, datac, 0, 0)
+	ds1629_op(ctl, opcode, DSADDR_IGNORE, data, datac, 0, 0)
+
 #define ds1629_op_r(ctl, opcode, data, datac) \
-	ds1629_op(ctl, opcode, 0, 0, DSADDR_IGNORE, data, datac)
-#define ds1629_op_wa(ctl, opcode, addr, data, datac) \
-	ds1629_op(ctl, opcode, data, addr, datac, 0, 0)
-#define ds1629_op_ra(ctl, opcode, addr, data, datac) \
-	ds1629_op(ctl, opcode, data, addr, datac, 0, 0)
+	ds1629_op(ctl, opcode, DSADDR_IGNORE, 0, 0, data, datac)
+
+#define ds1629_op_waddr(ctl, opcode, addr, data, datac) \
+	ds1629_op(ctl, opcode, addr, data, datac, 0, 0)
+
+#define ds1629_op_raddr(ctl, opcode, addr, data, datac) \
+	ds1629_op(ctl, opcode, addr, 0, 0, data, datac)
 
 /* Writes addr byte, opcode byte and data bytes */
 static inline uint8_t
@@ -126,6 +139,20 @@ _ds1629_op_w(uint8_t ctl, uint8_t opcode, uint8_t addr, uint8_t* data, size_t da
 /* Writes addr byte and receive data bytes from slave, related to previous op */
 static inline uint8_t
 _ds1629_op_r(uint8_t ctl, uint8_t* data, size_t datac);
+
+
+/*
+ * Utilities
+ */
+#define _bcd_to_number(result, byte, tens_mask) \
+	result = (byte & tens_mask) >> 4;           \
+	result *= 10;                               \
+	result += byte % 10;
+
+#define _number_to_bcd(result, number) \
+	result = number / 10;              \
+	result <<= 4;                      \
+	result += number % 10;
 
 
 /*
