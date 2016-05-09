@@ -14,7 +14,7 @@ twi_init(void);
 inline uint8_t
 twi_start(void); //0 - success
 inline void
-twi_stop(void); //0 - success
+twi_stop(void);
 
 uint8_t
 twi_send_byte(uint8_t data); //Returns ACK
