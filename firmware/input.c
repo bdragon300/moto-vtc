@@ -38,17 +38,17 @@ get_button_state(void)
     return (INPUT_PIN & _BV(BUTTON_PIN)) != 0;
 }
 
-inline Raw_volt_t
+inline uint8_t
 get_volts(void)
 {
     ADCSRA |= _BV(ADSC); //Start the conversion
     while (ADCSRA & _BV(ADIF)); //Wait until it complete
 
-    Raw_volt_t res = ADCL;
-    res = ADCH;
+    uint8_t raw = ADCL;
+    raw = ADCH;
     ADCSRA |= _BV(ADIF); //Clear ADIF bit by write one to it
 
-    return res;
+    return uint16_t(raw * 7) / 10 + 1; //180*res/255
 }
 
 inline uint8_t

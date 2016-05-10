@@ -34,7 +34,7 @@ get_button_state(void);
 
 //Starts ADC convert and waits until it will finished
 //Returns actual voltage * 10 with accuracy 0.1, i.e. 134 means 13.4 volts
-inline Raw_volt_t
+inline uint8_t
 get_volts(void);
 
 // Returns whether the battery is charging now

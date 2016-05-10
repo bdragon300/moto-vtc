@@ -6,7 +6,7 @@
  */
 
 #include <avr/io.h>
-#include "../ds1629/twi.h"
+#include "twi.h"
 
 inline void
 twi_init(void)

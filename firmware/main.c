@@ -23,8 +23,6 @@ void appBoot(void)
 --- Globals ---
 ---------------*/
 
-int8_t temperature = 0;
-Human_timedate_t timedate = {0};
 Display_mode_t display_mode = INIT;
 
 
@@ -32,8 +30,6 @@ Display_mode_t display_mode = INIT;
 
 void appLoop_Display(void)
 {
-    const uint8_t dig_pattern = {DIG_PATTERN_0, DIG_PATTERN_1, DIG_PATTERN_2, DIG_PATTERN_3, DIG_PATTERN_4,
-        DIG_PATTERN_5, DIG_PATTERN_6, DIG_PATTERN_7, DIG_PATTERN_8, DIG_PATTERN_9};
     while(true) {
         
     }
