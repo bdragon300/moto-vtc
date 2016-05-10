@@ -5,7 +5,7 @@
  *      Author: gosha
  */
 
-#include "ds1629.h"
+#include "../ds1629/ds1629.h"
 
 void
 ds1629_init(uint8_t ctl)

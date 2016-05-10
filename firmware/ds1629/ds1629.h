@@ -10,7 +10,7 @@
 
 #include <avr/io.h>
 #include <stdint.h>
-#include "twi.h"
+#include "../ds1629/twi.h"
 
 
 /*
