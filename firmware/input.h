@@ -20,6 +20,9 @@ enum {
     LONG_PRESS  //User is pressing button longer then press timeout
 } Input_mode_t;
 
+void
+input_init();
+
 // Calls on every timer tick from task
 void
 button_timer_tick(void);

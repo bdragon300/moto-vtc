@@ -37,6 +37,9 @@
 #define DISP_COM5       PB5;
 #define DISP_COM_MASK   _BV(DISP_COM1)|_BV(DISP_COM2)|_BV(DISP_COM3)|_BV(DISP_COM4)|_BV(DISP_COM5)
 
+// DS1629 address
+// Last bit will be ignored
+#define DS1629_ADDR     0x02
 
 /*----------------
 ---- Software ----

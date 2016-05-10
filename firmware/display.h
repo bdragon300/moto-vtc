@@ -14,10 +14,14 @@ typedef struct
     uint8_t indication; //Auxiliary segments like dots, colons
 } Display_data_t;
 
+
 void
 display_init();
 
 // Show information on display and set display mode
+void
+show_init_display();
+
 void
 show_time(ds1629_Time_t data);
 

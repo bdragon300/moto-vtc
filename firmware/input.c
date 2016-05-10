@@ -4,6 +4,12 @@ uint8_t ticks_counter = 0;
 Input_mode_t input_mode = IDLE;
 
 void
+input_init()
+{
+    INPUT_DDR &= ~(_BV(CHARGE_PIN) | _BV(BUTTON_PIN));
+}
+
+void
 button_timer_tick(void)
 {
     uint8_t prev_counter = ticks_counter;

@@ -13,6 +13,18 @@ display_init()
 	//Disable all digits
 	DISP_COM_PORT |= DISP_COM_MASK;
 	DISP_PORT |= DISP_SEG_MASK;
+
+    DISP_PORT = DISP_SEG_MASK;
+    DISP_DDR = DISP_SEG_MASK;
+
+    DISP_COM_PORT = DISP_COM_MASK;
+    DISP_COM_DDR = DISP_COM_MASK;
+}
+
+void
+show_init_display()
+{
+	memset(display_data.digits, SEG_MINUS, 4);
 }
 
 void 
