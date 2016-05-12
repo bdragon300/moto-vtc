@@ -25,7 +25,7 @@ input_init();
 
 // Calls on every timer tick from task
 void
-button_timer_tick(void);
+input_tick(void);
 
 
 inline Input_mode_t

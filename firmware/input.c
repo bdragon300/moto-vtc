@@ -10,16 +10,22 @@ input_init()
 }
 
 void
-button_timer_tick(void)
+input_tick(void)
 {
     uint8_t prev_counter = ticks_counter;
-    ticks_counter = (get_button_state()) ? ticks_counter++ : 0;
+    if (get_button_state()) {
+    	if (ticks_counter < 255) {
+    		ticks_counter++;
+    	}
+    } else {
+    	ticks_counter = 0;
+    }
 
-    if ( // Button just released after short press
-        prev_counter
+    if (prev_counter
         && prev_counter < PRESS_TIMEOUT 
         && ticks_counter == 0) 
     {
+    	// Button just released after short press
         input_mode = CLICK;
     }
     else if (ticks_counter == 0) //IDLE
@@ -35,7 +41,7 @@ button_timer_tick(void)
 inline Input_mode_t
 get_input_mode()
 {
-    return ticks_counter;
+    return input_mode;
 }
 
 inline uint8_t
