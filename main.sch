@@ -12872,18 +12872,6 @@ Source: avr.lbr</description>
 <junction x="289.56" y="182.88"/>
 </segment>
 </net>
-<net name="MCU_CLOCK" class="0">
-<segment>
-<wire x1="144.78" y1="134.62" x2="119.38" y2="134.62" width="0.1524" layer="91"/>
-<label x="119.38" y="134.62" size="1.778" layer="95" rot="R180" xref="yes"/>
-<pinref part="IC1" gate="G$1" pin="PB6(XTAL1/TOSC1)"/>
-</segment>
-<segment>
-<pinref part="U$1" gate="G$1" pin="OSC"/>
-<wire x1="281.94" y1="193.04" x2="312.42" y2="193.04" width="0.1524" layer="91"/>
-<label x="312.42" y="193.04" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
 <net name="VDD" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="VDD"/>
