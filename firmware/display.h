@@ -39,9 +39,9 @@ render_digit(uint8_t offset);
 
 // Shows additional indication such as charge led or mode led
 static void
-show_indication();
+_show_indication();
 
 static inline uint8_t
-get_segments(uint8_t number, uint8_t display_0);
+_get_segments(uint8_t number, uint8_t display_0);
 
 #endif

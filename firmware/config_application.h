@@ -81,7 +81,6 @@
 #define includeTaskDelayFromNow     cfgTrue
 #define includeTaskDelayFromWake    cfgFalse
 #define includeGenSuspend           cfgFalse
-#define includeTaskDelayFromNow     cfgTrue
 
 /*----------------
 - external calls -

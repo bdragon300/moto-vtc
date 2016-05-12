@@ -2,7 +2,6 @@
 
 
 Display_data_t display_data = {0}; //4 digits and indication byte
-Display_mode_t display_mode = INIT;
 const uint8_t segment_modes[4] = {SEG_MODE_1, SEG_MODE_2, SEG_MODE_3, 0};
 const uint8_t display_com[5] = {DISP_COM1, DISP_COM2, DISP_COM3, DISP_COM4, DISP_COM5};
 uint8_t charging = 0;
@@ -30,14 +29,13 @@ show_init_display()
 void 
 show_time(ds1629_Time_t data)
 {
-    display_data.digits[0] = get_segments(data.hours / 10, 0);
-    display_data.digits[1] = get_segments(data.hours % 10);
-    display_data.digits[2] = get_segments(data.minutes / 10);
-    display_data.digits[3] = get_segments(data.minutes % 10);
-    display_data.indication = SEG_COLON;
+    display_data.digits[0] = _get_segments(data.hours / 10, 0);
+    display_data.digits[1] = _get_segments(data.hours % 10);
+    display_data.digits[2] = _get_segments(data.minutes / 10);
+    display_data.digits[3] = _get_segments(data.minutes % 10);
+    display_data.indication = SEG_COLON | SEG_MODE_1;
 
-    display_mode = TIME;
-    show_indication();
+    _show_indication();
 }
 
 void 
@@ -46,26 +44,24 @@ show_temp(ds1629_Temp_t data)
     uint8_t adata = abs(data);
 
     display_data.digits[0] = (data < 0) ? SEG_MINUS : 0;
-    display_data.digits[1] = get_segments(adata / 100);
-    display_data.digits[2] = get_segments(adata / 10 % 10);
-    display_data.digits[3] = get_segments(adata % 10);
-    display_data.indication = SEG_DOT;
+    display_data.digits[1] = _get_segments(adata / 100);
+    display_data.digits[2] = _get_segments(adata / 10 % 10);
+    display_data.digits[3] = _get_segments(adata % 10);
+    display_data.indication = SEG_DOT | SEG_MODE_2;
 
-    display_mode = TEMP;
-    show_indication();
+    _show_indication();
 }
 
 void 
 show_volt(uint8_t data)
 {
     display_data.digits[0] = 0;
-    display_data.digits[1] = get_segments(data / 100, 0);
-    display_data.digits[2] = get_segments(data / 10 % 10);
-    display_data.digits[3] = get_segments(data % 10);
-    display_data.indication = SEG_DOT;
+    display_data.digits[1] = _get_segments(data / 100, 0);
+    display_data.digits[2] = _get_segments(data / 10 % 10);
+    display_data.digits[3] = _get_segments(data % 10);
+    display_data.indication = SEG_DOT | SEG_MODE_3;
 
-    display_mode = VOLT;
-    show_indication();
+    _show_indication();
 }
 
 void
@@ -87,14 +83,13 @@ render_digit(uint8_t offset)
 }
 
 static void
-show_indication()
+_show_indication()
 {
-    display_data.indication |= segment_modes[display_mode];
     display_data.indication |= SEG_CHARGE * charging;
 }
 
 static inline uint8_t
-get_segments(uint8_t number, uint8_t display_0 = 1)
+_get_segments(uint8_t number, uint8_t display_0 = 1)
 {
     switch(number) {
         case 0:
