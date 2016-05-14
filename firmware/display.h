@@ -6,22 +6,33 @@
 #include "femtoos_code.h"
 #include "math.h"
 
-/* Types */
-enum {TIME, VOLT, TEMP, INIT} Display_mode_t;
+
+/*
+ * --- TYPES ---
+ */
 typedef struct 
 {
     uint8_t digits[4];
     uint8_t indication; //Auxiliary segments like dots, colons
 } Display_data_t;
 
-
+/*
+ * Initialization
+ */
 void
 display_init();
 
-// Show information on display and set display mode
+
+/*
+ * Show "init display" with dashes
+ */
 void
 show_init_display();
 
+
+/*
+ * Functions show given information
+ */
 void
 show_time(ds1629_Time_t data);
 
@@ -34,13 +45,29 @@ show_volt(uint8_t data);
 void
 show_charge(uint8_t data);
 
+
+/*
+ * Calls from main code to render digit with offset
+ */
 void
 render_digit(uint8_t offset);
 
-// Shows additional indication such as charge led or mode led
+
+
+/*
+ * --- Utilities ---
+ */
+
+/*
+ * Shows additional indication such as mode led
+ */
 static void
 _show_indication();
 
+/*
+ * Gets segment mask byte for given number
+ * display_0 - whether show or not 0 number
+ */
 static inline uint8_t
 _get_segments(uint8_t number, uint8_t display_0);
 
