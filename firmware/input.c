@@ -1,6 +1,7 @@
 #include "input.h"
 
 uint8_t ticks_counter = 0;
+uint8_t event_ticks = 0; //ticks_counter value when any button event occured
 Input_mode_t input_mode = IDLE;
 
 void
@@ -12,30 +13,42 @@ input_init()
 void
 input_tick(void)
 {
-    uint8_t prev_counter = ticks_counter;
-    if (get_button_state()) {
-    	if (ticks_counter < 255) {
-    		ticks_counter++;
-    	}
-    } else {
-    	ticks_counter = 0;
-    }
+	++ticks_counter;
+	uint8_t btn_state = get_button_state();
 
-    if (prev_counter
-        && prev_counter < PRESS_TIMEOUT 
-        && ticks_counter == 0) 
-    {
-    	// Button just released after short press
-        input_mode = CLICK;
-    }
-    else if (ticks_counter == 0) //IDLE
-    {
-        input_mode = IDLE;
-    }
-    else if (ticks_counter >= PRESS_TIMEOUT) // Button still pressing for a long time
-    {
-        input_mode = LONG_PRESS;
-    }
+    switch (input_mode) {
+		case IDLE:
+			if (btn_state) {
+				_set_input_mode(PRESS);
+			}
+			break;
+
+		case PRESS:
+			if (btn_state) {
+				if (ticks_counter - event_ticks == HOLD_THRESHOLD) {
+					_set_input_mode(HOLD);
+				}
+			}
+			else {
+				_set_input_mode(CLICK);
+			}
+			break;
+
+		case CLICK:
+			//Ignore any input while CLICK_GAP ticks reached
+			if (ticks_counter - event_ticks == CLICK_GAP) {
+				_set_input_mode(IDLE);
+			}
+			break;
+
+		case HOLD:
+			if ( ! btn_state) {
+				if (ticks_counter - event_ticks == CLICK_GAP) {
+					_set_input_mode(IDLE);
+				}
+			}
+			break;
+	}
 }
 
 inline Input_mode_t
@@ -67,4 +80,12 @@ inline uint8_t
 get_charge(void)
 {
     return (INPUT_PIN & _BV(CHARGE_PIN)) != 0;
+}
+
+
+static void
+_set_input_mode(Input_mode_t mode)
+{
+	input_mode = mode;
+	event_ticks = ticks_counter;
 }
