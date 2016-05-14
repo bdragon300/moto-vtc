@@ -64,6 +64,24 @@
 #define SEG_CHARGE      _BV(DISP_G)
 #define SEG_MINUS       _BV(DISP_G) /* Minus in digit */
 
+/*
+ * Count of ticks when pressed button goes to HOLD mode
+ * 0-255 range
+ */
+#define HOLD_THRESHOLD 200; // :)
+
+/*
+ * Minimal count of ticks between clicks (when CLICK mode goes to IDLE)
+ * 0-255 range
+ */
+#define CLICK_GAP 50;
+
+/*
+ * Interval between consecutive input events in HOLD mode
+ * 0-255 range
+ */
+#define HOLD_EVENT_INTERVAL 200;
+
 
 /*----------------
 ----- Tasks ------
