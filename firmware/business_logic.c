@@ -32,6 +32,10 @@ fetched_data = {0};
 void
 business_init(void)
 {
+	input_callbacks.on_button_click = button_click;
+	input_callbacks.on_button_hold = button_hold;
+	input_callbacks.on_button_release = button_release;
+
 	device_mode.display_mode = INIT;
 	fetch_all_data();
 }

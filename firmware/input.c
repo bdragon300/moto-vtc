@@ -4,6 +4,7 @@ uint8_t ticks_counter = 0;
 uint8_t event_ticks = 0; //ticks_counter value when any button event occured
 Input_mode_t input_mode = IDLE;
 
+
 void
 input_init()
 {
@@ -42,25 +43,22 @@ input_tick(void)
 			break;
 
 		case HOLD:
-			if ( ! btn_state) {
-				if (ticks_counter - event_ticks == CLICK_GAP) {
-					_set_input_mode(IDLE);
+			if (btn_state) {
+				if (ticks_counter - event_ticks == HOLD_EVENT_INTERVAL) {
+					set_input_mode(HOLD);
 				}
+			}
+			else {
+				_set_input_mode(RELEASE);
+			}
+			break;
+
+		case RELEASE:
+			if (ticks_counter - event_ticks == CLICK_GAP) {
+				_set_input_mode(IDLE);
 			}
 			break;
 	}
-}
-
-inline Input_mode_t
-get_input_mode()
-{
-    return input_mode;
-}
-
-inline uint8_t
-get_button_state(void)
-{
-    return (INPUT_PIN & _BV(BUTTON_PIN)) != 0;
 }
 
 inline uint8_t
@@ -76,16 +74,16 @@ get_volts(void)
     return uint16_t(raw * 7) / 10 + 1; //180*res/255
 }
 
-inline uint8_t
-get_charge(void)
-{
-    return (INPUT_PIN & _BV(CHARGE_PIN)) != 0;
-}
-
 
 static void
 _set_input_mode(Input_mode_t mode)
 {
 	input_mode = mode;
 	event_ticks = ticks_counter;
+
+	//Do callback
+	if ( (&input_callbacks)[mode] )
+	{
+		(&input_callbacks)[mode]();
+	}
 }
