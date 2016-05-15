@@ -14,16 +14,6 @@
  */
 extern Device_mode_t device_mode = {0};
 
-/*
- * Data that was fetched from all sources
- */
-struct {
-	ds1629_Temp_t temp;
-	ds1629_Time_t clock;
-	uint8_t volt;
-}
-fetched_data = {0};
-
 
 /*
  * === FUNCTIONS ===
@@ -37,7 +27,6 @@ business_init(void)
 	input_callbacks.on_button_release = button_release;
 
 	device_mode.display_mode = INIT;
-	fetch_all_data();
 }
 
 void
@@ -55,13 +44,13 @@ button_click(void)
 
 		switch (device_mode.display_mode) {
 			case TIME:
-				show_time(fetched_data.clock);
+				show_time(sources_data.clock);
 				break;
 			case VOLT:
-				show_volt(fetched_data.volt);
+				show_volt(sources_data.volt);
 				break;
 			case TEMP:
-				show_temp(fetched_data.temp);
+				show_temp(sources_data.temp);
 				break;
 		}
 	}
@@ -71,7 +60,7 @@ button_click(void)
 		if (device_mode.settings.time_settings.current_digit > 3) {
 			device_mode.settings.settings_mode == NONE;
 			ds1629_write_clock(DS1629_ADDR, device_mode.settings.time_settings.new_time);
-			fetched_data.clock = device_mode.settings.time_settings.new_time;
+			sources_data.clock = device_mode.settings.time_settings.new_time;
 			//release semaphore
 		}
 	}
@@ -86,7 +75,7 @@ button_hold(void)
 	if (device_mode.settings.settings_mode == NONE) {
 		//get semaphore
 		device_mode.settings.settings_mode == TIME;
-		device_mode.settings.time_settings.new_time = fetched_data.clock;
+		device_mode.settings.time_settings.new_time = sources_data.clock;
 		device_mode.settings.time_settings.current_digit = 0;
 
 		device_mode.forbid_button = 1; //User must release button after entering settings
@@ -119,12 +108,4 @@ button_release(void)
 
 	if (device_mode.forbid_button)
 		return;
-}
-
-void
-fetch_all_data(void)
-{
-	fetched_data.temp = ds1629_read_temp(DS1629_ADDR);
-	fetched_data.clock = ds1629_read_clock(DS1629_ADDR);
-	fetched_data.volt = get_volts();
 }
