@@ -8,6 +8,18 @@
 #include <avr/io.h>
 
 
+//TODO: debug
+/*
+ * Data that was fetched from all sources
+ */
+extern struct {
+	ds1629_Temp_t temp;
+	ds1629_Time_t clock;
+	uint8_t volt;
+}
+sources_data = {0};
+
+
 void
 appBoot(void)
 {
@@ -16,84 +28,71 @@ appBoot(void)
 
 	input_init();
 	ds1629_init(DS1629_ADDR);
-
-	update_data();
+	business_init();
 }
 
-/*-------------
---- Globals ---
----------------*/
+/*
+ * --- TASKS ---
+ */
 
-Display_mode_t display_mode = INIT;
-
-struct {
-	ds1629_Temp_t temp;
-	ds1629_Time_t clock;
-	uint8_t volt;
-}
-fetched_data;
-
-
+/*
+ * Display rendering task
+ * Refresh frequency is 100Hz
+ */
 #if (preTaskDefined(Display))
 
 void
 appLoop_Display(void)
 {
+	//TODO: half-brightness digits
     uint8_t current_digit = 0;
     while(1) {
         render_digit(current_digit++);
         if (current_digit > 4)
             current_digit = 0;
-
-        //Delay 5ms
-        taskDelayFromNow(78);
+        taskDelayFromWake(DIGIT_RENDER_DELAY);
     }
 }
 
 #endif
 
-#if (preTaskDefined(Input))
+
+/*
+ * Button task
+ */
+#if (preTaskDefined(Button))
 
 void
-appLoop_Input(void)
+appLoop_Button(void)
 {
-    taskDelayFromNow(7812); //show init display 0.5sec
-    display_mode = TIME;
+    taskDelayFromNow(SYSTEM_TICKS_1SEC/2); //show init display 0.5sec
+    uint8_t prev_button_pressed = 0;
+
 	while(1) {
 		input_tick();
-
-		Input_mode_t mode = get_input_mode();
-		if (mode == CLICK) {
-			display_mode++;
-			if (display_mode > TEMP) {
-				display_mode = TIME;
-			}
-
-			switch (display_mode) {
-				case TIME:
-					show_time(fetched_data.clock);
-					break;
-				case VOLT:
-					show_volt(fetched_data.volt);
-					break;
-				case TEMP:
-					show_temp(fetched_data.temp);
-					break;
-			}
-		}
+		taskDelayFromNow(INPUT_TICK_DURATION);
 	}
 }
 
 #endif
 
 
-/*-------------
--- Utilities --
----------------*/
+/*
+ * Input sources read task, except button (temp, clock, volts)
+ */
+#if (preTaskDefined(Sources))
+
 void
-update_data(void)
+appLoop_Sources(void)
 {
-	fetched_data.temp = ds1629_read_temp(DS1629_ADDR);
-	fetched_data.clock = ds1629_read_clock(DS1629_ADDR);
-	fetched_data.volt = get_volts();
+	while(1) {
+		sources_data.temp = ds1629_read_temp(DS1629_ADDR);
+		sources_data.clock = ds1629_read_clock(DS1629_ADDR);
+		sources_data.volt = get_volts();
+		//TODO: wrong voltage warning
+
+		taskDelayFromNow(SYSTEM_TICKS_1SEC);
+	}
 }
+
+#endif

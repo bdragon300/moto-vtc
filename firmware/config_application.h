@@ -5,6 +5,14 @@
 ---- Hardware ----
 ------------------*/
 
+/*
+ * 1 second duration in system ticks
+ */
+#define SYSTEM_TICKS_1SEC 15625;
+
+/*
+ * Input and display pins definitions
+ */
 #define INPUT_PORT  PORTC;
 #define INPUT_PIN   PINC;
 #define INPUT_DDR   DDRC;
@@ -38,7 +46,7 @@
 #define DISP_COM_MASK   _BV(DISP_COM1)|_BV(DISP_COM2)|_BV(DISP_COM3)|_BV(DISP_COM4)|_BV(DISP_COM5)
 
 // DS1629 address
-// Last bit will be ignored
+// Last bit will be ignored by TWI
 #define DS1629_ADDR     0x02
 
 /*----------------
@@ -65,22 +73,33 @@
 #define SEG_MINUS       _BV(DISP_G) /* Minus in digit */
 
 /*
- * Count of ticks when pressed button goes to HOLD mode
+ * Count of input ticks when pressed button goes to HOLD mode
  * 0-255 range
  */
 #define HOLD_THRESHOLD 200; // :)
 
 /*
- * Minimal count of ticks between clicks (when CLICK mode goes to IDLE)
+ * Minimal count of input ticks between clicks (when CLICK mode goes to IDLE)
  * 0-255 range
  */
 #define CLICK_GAP 50;
 
 /*
- * Interval between consecutive input events in HOLD mode
+ * Interval between consecutive HOLD events in input ticks
  * 0-255 range
  */
-#define HOLD_EVENT_INTERVAL 200;
+#define HOLD_EVENT_INTERVAL 100;
+
+/*
+ * Time to show one digit while rendering in system ticks
+ * uint16_t
+ */
+#define DIGIT_RENDER_DELAY SYSTEM_TICKS_1SEC/40; //Delay 2.5ms (whole display is 2.5*4=10ms)
+
+/*
+ * Input tick duration in system ticks
+ */
+#define INPUT_TICK_DURATION SYSTEM_TICKS_1SEC/80; //Input tick = ~5ms
 
 
 /*----------------
@@ -88,9 +107,8 @@
 ------------------*/
 
 #define CN_00   Display
-#define CN_01   Input
-#define CN_02   ADC
-#define CN_04   TimeTemp
+#define CN_01   Button
+#define CN_02   Sources
 
 /*----------------
 - API inclusions -
