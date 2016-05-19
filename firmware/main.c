@@ -53,7 +53,6 @@ appBoot(void)
 void
 appLoop_Display(void)
 {
-	//TODO: half-brightness digits
 	uint8_t ticks_counter = 0;
     while(1) {
 
@@ -67,11 +66,19 @@ appLoop_Display(void)
     	}
     	blinking_display = bad_voltage;
     	render_digit(ticks_counter % 4);
-        ++ticks_counter;
 
         taskMutexReleaseOnName(display);
 
-        taskDelayFromWake(DIGIT_RENDER_DELAY);
+        // If current digit is shadowed then render it shortly
+        if (get_digits_shadow_mask() & _BV(ticks_counter % 4)) {
+        	taskDelayFromWake(SHADOW_DIGIT_RENDER_DELAY);
+        	disable_display();
+        	taskDelayFromNow(DIGIT_RENDER_DELAY - SHADOW_DIGIT_RENDER_DELAY);
+        }
+        else {
+        	taskDelayFromWake(DIGIT_RENDER_DELAY);
+        }
+        ++ticks_counter;
     }
 }
 

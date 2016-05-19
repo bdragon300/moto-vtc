@@ -97,6 +97,12 @@
 #define DIGIT_RENDER_DELAY SYSTEM_TICKS_1SEC/40 //Delay 2.5ms (whole display is 2.5*4=10ms)
 
 /*
+ * Time to show one shadow digit while rendering on the same frequency
+ * i.e. this is duty cycle in time ticks
+ */
+#define SHADOW_DIGIT_RENDER_DELAY SYSTEM_TICKS_1SEC/80 //Delay 1.25ms
+
+/*
  * Input tick duration in system ticks
  */
 #define INPUT_TICK_DURATION SYSTEM_TICKS_1SEC/80 //Input tick = ~5ms
