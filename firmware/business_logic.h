@@ -53,6 +53,12 @@ void
 business_init(void);
 
 /*
+ * Sets whole device state to default
+ */
+void
+business_reset_state();
+
+/*
  * Calls when button clicked
  */
 void
@@ -71,10 +77,11 @@ void
 button_release(void);
 
 /*
- * Fetch and updates actual data from all devices
+ * Calls when its need to check voltage
+ * Returns whether voltage is within good limits. 0|1
  */
-void
-fetch_all_data(void);
+inline uint8_t
+detect_bad_voltage(uint8_t volt);
 
 /*
  * Returns mask of half-brigthness digits. 1 is shadowed.

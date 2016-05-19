@@ -19,6 +19,12 @@ extern struct {
 }
 sources_data = {0};
 
+uint8_t bad_voltage = 0;
+uint8_t blinking_display = 0;
+
+void
+fetch_all_sources(void);
+
 
 void
 appBoot(void)
@@ -29,6 +35,9 @@ appBoot(void)
 	input_init();
 	ds1629_init(DS1629_ADDR);
 	business_init();
+
+	fetch_all_sources();
+	business_reset_state();
 }
 
 /*
@@ -45,12 +54,56 @@ void
 appLoop_Display(void)
 {
 	//TODO: half-brightness digits
-    uint8_t current_digit = 0;
+	uint8_t ticks_counter = 0;
     while(1) {
-        render_digit(current_digit++);
-        if (current_digit > 4)
-            current_digit = 0;
+
+    	taskMutexRequestOnName(display);
+
+    	// Resume blinking task when voltage just become bad
+    	if ( bad_voltage
+    		&& blinking_display == 0)
+    	{
+    		genResume(preTaskNumberOf(DisplayBlink));
+    	}
+    	blinking_display = bad_voltage;
+    	render_digit(ticks_counter % 4);
+        ++ticks_counter;
+
+        taskMutexReleaseOnName(display);
+
         taskDelayFromWake(DIGIT_RENDER_DELAY);
+    }
+}
+
+#endif
+
+
+/*
+ * Display blinking task
+ * Toggles display every DISPLAY_BLINK_INTERVAL system ticks
+ */
+#if (preTaskDefined(DisplayBlink))
+
+void
+appLoop_DisplayBlink(void)
+{
+	int8_t display_disabled = 0;
+
+    while(1) {
+    	if (display_disabled) {
+    		display_disabled = 0;
+    		taskMutexReleaseOnName(display);
+
+    	} else {
+        	if ( ! blinking_display) {
+        		taskSuspend(defSuspendNow);
+        	}
+
+    		taskMutexRequestOnName(display);
+    		display_disabled = 1;
+    		disable_display();
+    	}
+    	taskDelayFromNow(DISPLAY_BLINK_INTERVAL);
     }
 }
 
@@ -86,13 +139,25 @@ void
 appLoop_Sources(void)
 {
 	while(1) {
-		sources_data.temp = ds1629_read_temp(DS1629_ADDR);
-		sources_data.clock = ds1629_read_clock(DS1629_ADDR);
-		sources_data.volt = get_volts();
-		//TODO: wrong voltage warning
+		fetch_all_sources();
 
 		taskDelayFromNow(SYSTEM_TICKS_1SEC);
 	}
 }
 
 #endif
+
+/*
+ * --- UTILITIES ---
+ */
+/*
+ * Fetches data from all input sources, except button (temp, clock, volts)
+ */
+void
+fetch_all_sources(void)
+{
+	sources_data.temp = ds1629_read_temp(DS1629_ADDR);
+	sources_data.clock = ds1629_read_clock(DS1629_ADDR);
+	sources_data.volt = get_volts();
+	bad_voltage = detect_bad_voltage(); //Sets mode to volt display
+}

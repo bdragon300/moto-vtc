@@ -112,8 +112,9 @@
 ------------------*/
 
 #define CN_00   Display
-#define CN_01   Button
-#define CN_02   Sources
+#define CN_01   DisplayBlink
+#define CN_02   Button
+#define CN_03   Sources
 
 /*----------------
 - API inclusions -

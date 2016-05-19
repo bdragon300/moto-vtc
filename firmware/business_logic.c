@@ -30,6 +30,15 @@ business_init(void)
 }
 
 void
+business_reset_state()
+{
+	device_mode.settings.settings_mode = NONE;
+	device_mode.display_mode = TIME;
+	device_mode.forbid_button = 0;
+	show_time(sources_data.clock);
+}
+
+void
 button_click(void)
 {
 	if (device_mode.forbid_button)
@@ -108,4 +117,18 @@ button_release(void)
 
 	if (device_mode.forbid_button)
 		return;
+}
+
+
+inline uint8_t
+detect_bad_voltage()
+{
+	uint8_t bad = (sources_data.volt < 119)                     //From battery
+		|| (sources_data.volt > 128 && sources_data.volt < 134) //From generator
+		|| (sources_data.volt > 148);                           //From generator
+
+	if (bad) {
+		show_volt(sources_data.volt);
+	}
+	return bad;
 }
