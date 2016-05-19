@@ -76,30 +76,35 @@
  * Count of input ticks when pressed button goes to HOLD mode
  * 0-255 range
  */
-#define HOLD_THRESHOLD 200; // :)
+#define HOLD_THRESHOLD 200 // :)
 
 /*
  * Minimal count of input ticks between clicks (when CLICK mode goes to IDLE)
  * 0-255 range
  */
-#define CLICK_GAP 50;
+#define CLICK_GAP 50
 
 /*
  * Interval between consecutive HOLD events in input ticks
  * 0-255 range
  */
-#define HOLD_EVENT_INTERVAL 100;
+#define HOLD_EVENT_INTERVAL 100
 
 /*
  * Time to show one digit while rendering in system ticks
  * uint16_t
  */
-#define DIGIT_RENDER_DELAY SYSTEM_TICKS_1SEC/40; //Delay 2.5ms (whole display is 2.5*4=10ms)
+#define DIGIT_RENDER_DELAY SYSTEM_TICKS_1SEC/40 //Delay 2.5ms (whole display is 2.5*4=10ms)
 
 /*
  * Input tick duration in system ticks
  */
-#define INPUT_TICK_DURATION SYSTEM_TICKS_1SEC/80; //Input tick = ~5ms
+#define INPUT_TICK_DURATION SYSTEM_TICKS_1SEC/80 //Input tick = ~5ms
+
+/*
+ * Blink interval in system ticks when something is blinking on display
+ */
+#define DISPLAY_BLINK_INTERVAL SYSTEM_TICKS_1SEC/2
 
 
 /*----------------

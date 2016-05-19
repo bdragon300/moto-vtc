@@ -70,12 +70,19 @@ show_charge(uint8_t data)
 	charging = (data != 0);
 }
 
-void 
-render_digit(uint8_t offset)
+void
+disable_display(void)
 {
     //Disable all
     DISP_COM_PORT |= DISP_COM_MASK; //Disable all digits
     DISP_PORT |= DISP_SEG_MASK; //Disable all segments
+}
+
+
+void
+render_digit(uint8_t offset)
+{
+    disable_display();
 
     //Set up
     DISP_PORT &= ~(display_data[offset]);

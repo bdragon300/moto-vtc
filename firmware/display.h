@@ -47,6 +47,12 @@ show_charge(uint8_t data);
 
 
 /*
+ * Disables the whole display
+ */
+void
+disable_display(void);
+
+/*
  * Calls from main code to render digit with offset
  */
 void
