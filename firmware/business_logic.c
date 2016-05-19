@@ -5,6 +5,8 @@
  *      Author: gosha
  */
 
+#include "business_logic.h"
+
 /*
  * === VARIABLES ===
  */
@@ -27,12 +29,17 @@ business_init(void)
 	input_callbacks.on_button_release = button_release;
 
 	device_mode.display_mode = INIT;
+	device_mode.settings.settings_mode = NONE;
 }
 
 void
 business_reset_state()
 {
-	device_mode.settings.settings_mode = NONE;
+	if (device_mode.settings.settings_mode != NONE) {
+		device_mode.settings.settings_mode = NONE;
+		taskMutexReleaseOnName(sources);
+	}
+
 	device_mode.display_mode = TIME;
 	device_mode.forbid_button = 0;
 	show_time(sources_data.clock);
@@ -67,10 +74,10 @@ button_click(void)
 		++device_mode.settings.time_settings.current_digit;
 
 		if (device_mode.settings.time_settings.current_digit > 3) {
-			device_mode.settings.settings_mode == NONE;
+			device_mode.settings.settings_mode = NONE;
 			ds1629_write_clock(DS1629_ADDR, device_mode.settings.time_settings.new_time);
 			sources_data.clock = device_mode.settings.time_settings.new_time;
-			//release semaphore
+			taskMutexReleaseOnName(sources);
 		}
 	}
 }
@@ -82,8 +89,8 @@ button_hold(void)
 		return;
 
 	if (device_mode.settings.settings_mode == NONE) {
-		//get semaphore
-		device_mode.settings.settings_mode == TIME;
+		taskMutexRequestOnName(sources);
+		device_mode.settings.settings_mode = TIME;
 		device_mode.settings.time_settings.new_time = sources_data.clock;
 		device_mode.settings.time_settings.current_digit = 0;
 

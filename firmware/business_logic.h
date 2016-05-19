@@ -8,6 +8,7 @@
 #ifndef BUSINESS_LOGIC_H_
 #define BUSINESS_LOGIC_H_
 
+#include "femtoos_code.h"
 #include "config_application.h"
 #include "ds1629/ds1629.h"
 #include "input.h"

@@ -146,7 +146,11 @@ void
 appLoop_Sources(void)
 {
 	while(1) {
+		taskMutexRequestOnName(sources);
+
 		fetch_all_sources();
+
+		taskMutexReleaseOnName(sources);
 
 		taskDelayFromNow(SYSTEM_TICKS_1SEC);
 	}
