@@ -26,12 +26,12 @@
 #define DISP_PIN    PIND;
 #define DISP_DDR    DDRD;
 #define DISP_A      PD0;
-#define DISP_B      PD1;
-#define DISP_C      PD2;
-#define DISP_D      PD3;
-#define DISP_E      PD4;
-#define DISP_F      PD5;
-#define DISP_G      PD6;
+#define DISP_B      PD2;
+#define DISP_C      PD3;
+#define DISP_D      PD4;
+#define DISP_E      PD5;
+#define DISP_F      PD6;
+#define DISP_G      PD7;
 #define DISP_SEG_MASK   _BV(DISP_A)|_BV(DISP_B)|_BV(DISP_C)|_BV(DISP_D)|_BV(DISP_E)|_BV(DISP_F)|_BV(DISP_G)
 // digits
 //Low level is active
