@@ -1,0 +1,3 @@
+[submodule "firmware/uartdebug"]
+	path = firmware/uartdebug
+	url = https://bdragon300@bitbucket.org/bdragon300/uartdebug.git
