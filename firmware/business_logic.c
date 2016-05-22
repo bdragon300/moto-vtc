@@ -24,17 +24,26 @@ extern Device_mode_t device_mode = {0};
 void
 business_init(void)
 {
+	DEBUG1('>', "business_init");
+	DEBUGHEX1('d', &device_mode, sizeof(Device_mode_t));
+
 	input_callbacks.on_button_click = button_click;
 	input_callbacks.on_button_hold = button_hold;
 	input_callbacks.on_button_release = button_release;
 
 	device_mode.display_mode = INIT;
 	device_mode.settings.settings_mode = NONE;
+
+	DEBUGHEX1('D', &device_mode, sizeof(Device_mode_t));
+	DEBUG1('<', "business_init");
 }
 
 void
 business_reset_state()
 {
+	DEBUG1('>', "business_reset_state");
+	DEBUGHEX1('d', &device_mode, sizeof(Device_mode_t));
+
 	if (device_mode.settings.settings_mode != NONE) {
 		device_mode.settings.settings_mode = NONE;
 		taskMutexReleaseOnName(sources);
@@ -43,11 +52,17 @@ business_reset_state()
 	device_mode.display_mode = TIME;
 	device_mode.forbid_button = 0;
 	show_time(sources_data.clock);
+
+	DEBUGHEX1('D', &device_mode, sizeof(Device_mode_t));
+	DEBUG1('<', "business_reset_state");
 }
 
 void
 button_click(void)
 {
+	DEBUG1('>', "button_click");
+	DEBUGHEX1('d', &device_mode, sizeof(Device_mode_t));
+
 	if (device_mode.forbid_button)
 		return;
 
@@ -80,11 +95,17 @@ button_click(void)
 			taskMutexReleaseOnName(sources);
 		}
 	}
+
+	DEBUGHEX1('D', &device_mode, sizeof(Device_mode_t));
+	DEBUG1('<', "button_click");
 }
 
 void
 button_hold(void)
 {
+	DEBUG1('>', "button_hold");
+	DEBUGHEX1('d', &device_mode, sizeof(Device_mode_t));
+
 	if (device_mode.forbid_button)
 		return;
 
@@ -113,23 +134,31 @@ button_hold(void)
 		}
 		show_time(device_mode.settings.time_settings.new_time);
 	}
+
+	DEBUGHEX1('D', &device_mode, sizeof(Device_mode_t));
+	DEBUG1('<', "button_hold");
 }
 
 void
 button_release(void)
 {
+	DEBUG1('>', "button_release");
+	DEBUGHEX1('d', &device_mode, sizeof(Device_mode_t));
+
 	if (device_mode.settings.settings_mode == TIME) {
 		device_mode.forbid_button = 0;
 	}
 
-	if (device_mode.forbid_button)
-		return;
+	DEBUGHEX1('D', &device_mode, sizeof(Device_mode_t));
+	DEBUG1('<', "button_release");
 }
 
 
 inline uint8_t
 detect_bad_voltage()
 {
+	DEBUG2('>', "detect_bad_voltage");
+	DEBUGHEX2('s', &sources_data, sizeof(sources_data));
 	uint8_t bad = (sources_data.volt < 119)                     //From battery
 		|| (sources_data.volt > 128 && sources_data.volt < 134) //From generator
 		|| (sources_data.volt > 148);                           //From generator
@@ -137,5 +166,9 @@ detect_bad_voltage()
 	if (bad) {
 		show_volt(sources_data.volt);
 	}
+
+	DEBUGHEX2('=', &bad, 1);
+	DEBUG2('<', "detect_bad_voltage");
+
 	return bad;
 }

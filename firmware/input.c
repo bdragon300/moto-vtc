@@ -8,7 +8,14 @@ Input_mode_t input_mode = IDLE;
 void
 input_init()
 {
+	DEBUG1('>', "input_init");
+
     INPUT_DDR &= ~(_BV(CHARGE_PIN) | _BV(BUTTON_PIN));
+
+    uint8_t t = INPUT_DDR;
+
+    DEBUGHEX1('I', &t, 1);
+    DEBUG1('<', "input_init")
 }
 
 void
@@ -64,6 +71,8 @@ input_tick(void)
 inline uint8_t
 get_volts(void)
 {
+	DEBUG1('>', "get_volts");
+
     ADCSRA |= _BV(ADSC); //Start the conversion
     while (ADCSRA & _BV(ADIF)); //Wait until it complete
 
@@ -71,13 +80,21 @@ get_volts(void)
     raw = ADCH;
     ADCSRA |= _BV(ADIF); //Clear ADIF bit by write one to it
 
-    return uint16_t(raw * 7) / 10 + 1; //180*res/255
+    uint8_t res = uint16_t(raw * 7) / 10 + 1; //180*res/255
+
+    DEBUGHEX1('=', &res, 1);
+	DEBUG1('<', "get_volts");
+
+	return res;
 }
 
 
 static void
 _set_input_mode(Input_mode_t mode)
 {
+	DEBUG2('>', "_set_input_mode");
+	DEBUGHEX2('(', &mode, sizeof(Input_mode_t));
+
 	input_mode = mode;
 	event_ticks = ticks_counter;
 
@@ -86,4 +103,6 @@ _set_input_mode(Input_mode_t mode)
 	{
 		(&input_callbacks)[mode]();
 	}
+
+	DEBUG2('<', "_set_input_mode");
 }

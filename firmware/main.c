@@ -4,11 +4,11 @@
 #include "display.h"
 #include "input.h"
 #include "ds1629/ds1629.h"
+#include "uartdebug/uartdebug.h"
 
 #include <avr/io.h>
 
 
-//TODO: debug
 /*
  * Data that was fetched from all sources
  */
@@ -29,6 +29,10 @@ fetch_all_sources(void);
 void
 appBoot(void)
 {
+	DEBUG1('>', "appBoot");
+
+	uartDebugInit();
+
 	display_init();
 	show_init_display();
 
@@ -38,6 +42,8 @@ appBoot(void)
 
 	fetch_all_sources();
 	business_reset_state();
+
+	DEBUG1('<', "appBoot");
 }
 
 /*
@@ -62,6 +68,9 @@ appLoop_Display(void)
     	if ( bad_voltage
     		&& blinking_display == 0)
     	{
+    		DEBUG2('@', "Display");
+    		DEBUG2('@', "#voltage goes bad");
+
     		genResume(preTaskNumberOf(DisplayBlink));
     	}
     	blinking_display = bad_voltage;
@@ -98,15 +107,26 @@ appLoop_DisplayBlink(void)
 
     while(1) {
     	if (display_disabled) {
+    		DEBUG2('@', "DisplayBlink");
+    		DEBUG2('@', "#enable display");
+
     		display_disabled = 0;
+
     		taskMutexReleaseOnName(display);
 
     	} else {
         	if ( ! blinking_display) {
+        		DEBUG2('@', "DisplayBlink");
+        		DEBUG2('@', "#suspend task");
+
         		taskSuspend(defSuspendNow);
         	}
 
     		taskMutexRequestOnName(display);
+
+    		DEBUG2('@', "DisplayBlink");
+    		DEBUG2('@', "#disable display");
+
     		display_disabled = 1;
     		disable_display();
     	}
@@ -167,8 +187,15 @@ appLoop_Sources(void)
 void
 fetch_all_sources(void)
 {
+	DEBUG2('>', "fetch_all_sources");
+	DEBUGHEX2('s', &sources_data, sizeof(sources_data));
+
 	sources_data.temp = ds1629_read_temp(DS1629_ADDR);
 	sources_data.clock = ds1629_read_clock(DS1629_ADDR);
 	sources_data.volt = get_volts();
 	bad_voltage = detect_bad_voltage(); //Sets mode to volt display
+
+	DEBUGHEX2('S', &sources_data, sizeof(sources_data));
+	DEBUGHEX2('B', &bad_voltage, 1);
+	DEBUG2('<', "fetch_all_sources");
 }

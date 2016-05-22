@@ -2,7 +2,7 @@
 #define INPUT_H
 
 #include "config_application.h"
-#include "types.h"
+#include "uartdebug/uartdebug.h"
 #include <avr/io.h>
 #include <avr/stdint.h>
 

@@ -9,6 +9,8 @@ uint8_t charging = 0;
 void
 display_init()
 {
+	DEBUG2('>', "display_init")
+
 	//Disable all digits
 	DISP_COM_PORT |= DISP_COM_MASK;
 	DISP_PORT |= DISP_SEG_MASK;
@@ -18,17 +20,28 @@ display_init()
 
     DISP_COM_PORT = DISP_COM_MASK;
     DISP_COM_DDR = DISP_COM_MASK;
+
+    DEBUG2('<', "display_init")
 }
 
 void
 show_init_display()
 {
+	DEBUG1('>', "show_init_display");
+	DEBUGHEX1('d', &display_data, sizeof(Display_data_t));
+
 	memset(display_data.digits, SEG_MINUS, 4);
+
+	DEBUGHEX1('D', &display_data, sizeof(Display_data_t));
+	DEBUG1('<', "show_init_display");
 }
 
 void 
 show_time(ds1629_Time_t data)
 {
+	DEBUG2('>', "show_time");
+	DEBUGHEX2('d', &display_data, sizeof(Display_data_t));
+
     display_data.digits[0] = _get_segments(data.hours / 10, 0);
     display_data.digits[1] = _get_segments(data.hours % 10);
     display_data.digits[2] = _get_segments(data.minutes / 10);
@@ -36,11 +49,17 @@ show_time(ds1629_Time_t data)
     display_data.indication = SEG_COLON | SEG_MODE_1;
 
     _show_indication();
+
+	DEBUGHEX2('D', &display_data, sizeof(Display_data_t));
+	DEBUG2('<', "show_time");
 }
 
 void 
 show_temp(ds1629_Temp_t data)
 {
+	DEBUG2('>', "show_temp");
+	DEBUGHEX2('d', &display_data, sizeof(Display_data_t));
+
     uint8_t adata = abs(data);
 
     display_data.digits[0] = (data < 0) ? SEG_MINUS : 0;
@@ -50,11 +69,17 @@ show_temp(ds1629_Temp_t data)
     display_data.indication = SEG_DOT | SEG_MODE_2;
 
     _show_indication();
+
+	DEBUGHEX2('D', &display_data, sizeof(Display_data_t));
+	DEBUG2('<', "show_temp");
 }
 
 void 
 show_volt(uint8_t data)
 {
+	DEBUG2('>', "show_volt");
+	DEBUGHEX2('d', &display_data, sizeof(Display_data_t));
+
     display_data.digits[0] = 0;
     display_data.digits[1] = _get_segments(data / 100, 0);
     display_data.digits[2] = _get_segments(data / 10 % 10);
@@ -62,20 +87,33 @@ show_volt(uint8_t data)
     display_data.indication = SEG_DOT | SEG_MODE_3;
 
     _show_indication();
+
+	DEBUGHEX2('D', &display_data, sizeof(Display_data_t));
+	DEBUG2('<', "show_volt");
 }
 
 void
 show_charge(uint8_t data)
 {
+	DEBUG2('>', "show_volt");
+	DEBUGHEX2('(', &data, 1);
+
 	charging = (data != 0);
+
+	DEBUGHEX2('C', &data, 1);
+	DEBUG2('<', "show_volt");
 }
 
 void
 disable_display(void)
 {
+	DEBUG2('>', "disable_display");
+
     //Disable all
     DISP_COM_PORT |= DISP_COM_MASK; //Disable all digits
     DISP_PORT |= DISP_SEG_MASK; //Disable all segments
+
+	DEBUG2('<', "disable_display");
 }
 
 

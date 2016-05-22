@@ -5,6 +5,7 @@
 #include "ds1629/ds1629.h"
 #include "femtoos_code.h"
 #include "math.h"
+#include "uartdebug/uartdebug.h"
 
 
 /*
