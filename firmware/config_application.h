@@ -48,10 +48,10 @@
 #define DISP_COM_PIN                PINB;
 #define DISP_COM_DDR                DDRB;
 #define DISP_COM1                   PB1;
-#define DISP_COM2                   PB2;
-#define DISP_COM3                   PB5;
-#define DISP_COM4                   PB4;
-#define DISP_COM5                   PB3;
+#define DISP_COM2                   PB4;
+#define DISP_COM3                   PB3;
+#define DISP_COM4                   PB2;
+#define DISP_COM5                   PB0;
 #define DISP_COM_MASK  \
 	_BV(DISP_COM1)|_BV(DISP_COM2)|_BV(DISP_COM3)|_BV(DISP_COM4)|_BV(DISP_COM5)
 
