@@ -12795,11 +12795,11 @@ Source: avr.lbr</description>
 </net>
 <net name="N$25" class="0">
 <segment>
-<wire x1="193.04" y1="99.06" x2="233.68" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="233.68" y1="99.06" x2="233.68" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="233.68" y1="93.98" x2="233.68" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="233.68" y1="114.3" x2="243.84" y2="114.3" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="G$1" pin="PB3(MOSI/OC2)"/>
 <pinref part="R5" gate="G$1" pin="1"/>
+<pinref part="IC1" gate="G$1" pin="PB5(SCK)"/>
+<wire x1="233.68" y1="93.98" x2="193.04" y2="93.98" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$26" class="0">
@@ -12813,11 +12813,9 @@ Source: avr.lbr</description>
 </net>
 <net name="N$27" class="0">
 <segment>
-<wire x1="243.84" y1="99.06" x2="238.76" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="238.76" y1="99.06" x2="238.76" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="238.76" y1="93.98" x2="193.04" y2="93.98" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="G$1" pin="PB5(SCK)"/>
 <pinref part="R7" gate="G$1" pin="1"/>
+<pinref part="IC1" gate="G$1" pin="PB3(MOSI/OC2)"/>
+<wire x1="243.84" y1="99.06" x2="193.04" y2="99.06" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="DS1629_SDA" class="0">
