@@ -19,9 +19,9 @@
 #define INPUT_PORT                  PORTC;
 #define INPUT_PIN                   PINC;
 #define INPUT_DDR                   DDRC;
-#define VOLTAGE_PIN                 PC7;
-#define CHARGE_PIN                  PC0;
-#define BUTTON_PIN                  PC6;
+#define VOLTAGE_PIN                 PC6;
+#define CHARGE_PIN                  PC1;
+#define BUTTON_PIN                  PC0;
 
 /*
  * 7-seg indicator segment pins
