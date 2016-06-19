@@ -160,6 +160,8 @@
 ======================================
 */
 
+#define devClockFrequency           4000000LL
+
 /*
  * Tasks
  */
@@ -173,6 +175,7 @@
 #define TaskInclude_DisplayBlink    cfgStartSuspended
 #define TaskInclude_Button          cfgStartRunning
 #define TaskInclude_Sources         cfgStartRunning
+#define TaskInclude_task0           cfgExclude
 
 #define StackSize_Display           128
 #define StackSize_DisplayBlink      32
@@ -189,12 +192,15 @@
 #define cfgSysSubTickDivider        256
 
 #define includeTaskYield            cfgFalse
+#define cfgUseDelay                 cfgTrue
 #define includeTaskDelayFromNow     cfgTrue
 #define includeTaskDelayFromWake    cfgTrue
-#define includeGenSuspend           cfgFalse
+#define includeGenSuspend           cfgTrue
 #define includeTaskSuspend          cfgTrue
+#define cfgUseSynchronization       cfgSyncSingleSlot
 #define includeTaskMutex            cfgTrue
 #define includeGenResume            cfgTrue
+
 
 #define callAppBoot                 cfgTrue
 
@@ -203,6 +209,10 @@
 #define StackSizeISR                0
 #define StackSizeShared             0
 #define StackSizeOverride           46
+
+#define SlotSizeOverride            1
+#define SlotUseOverride             cfgUseAsMutex
+#define SN_01                       this_is_mutex
 
 #define cfgIntUserDefined           cfgFalse
 
@@ -241,9 +251,7 @@
 #define  cfgCheckMethodUse                       cfgFalse
 #define  cfgCheckApplication                     cfgFalse
 #define  cfgUseEquidistantTicks                  cfgTrue
-#define  cfgUseDelay                             cfgFalse
 #define  cfgUseSuspendOnDelay                    cfgFalse
-#define  cfgUseSynchronization                   cfgSyncNon
 #define  cfgUseHierarchicalRoundRobin            cfgFalse
 #define  cfgUseNestedCriticals                   cfgFalse
 #define  cfgUsePrioritizedRelease                cfgFalse
@@ -279,7 +287,6 @@
 #define  callAppInit                             cfgFalse
 #define  callAppBark                             cfgFalse
 #define  includeTaskYield                        cfgFalse
-#define  includeGenSuspend                       cfgFalse
 #define  includeTaskSleep                        cfgFalse
 #define  includeTaskSleepAll                     cfgFalse
 #define  includeGenSetPriority                   cfgFalse
@@ -346,11 +353,10 @@
 #define  StackSizeShared                         0
 #define  TimeSliceIdleTime                       cfgSysSubTicksPerFullTick
 #define  TimeSliceOverride                       cfgSysSubTicksPerFullTick
+#define  InterruptStartOverride                  cfgGlobSet
 #define  PriorityOverride                        0
-#define  RegisterUseOverride                     cfgOverrideNon
+#define  RegisterUseOverride                     registersAll
 #define  RegisterCheckOverride                   registersAll
-#define  SlotSizeOverride                        cfgOverrideNon
-#define  SlotUseOverride                         cfgOverrideNon
 #define  QueuSizeOverride                        cfgOverrideNon
 #define  FileSpaceStandard                       0
 #define  FileSpaceOverride                       cfgOverrideNon
